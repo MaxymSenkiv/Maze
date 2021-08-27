@@ -6,6 +6,8 @@ public class MazeSpawner : MonoBehaviour
 {
     public Transform CellPrefab;
 
+    public Vector3 CellSize = new Vector3(1, 1, 0);
+
     void Start()
     {
         MazeGenerator generator = new MazeGenerator();
@@ -14,9 +16,10 @@ public class MazeSpawner : MonoBehaviour
         {
             for (int j = 0; j < maze.GetLength(1); j++)
             {
-                Cell cell = Instantiate(CellPrefab, new Vector2(i, j), Quaternion.identity).GetComponent<Cell>();
+                Cell cell = Instantiate(CellPrefab, new Vector3(i * CellSize.x, j * CellSize.y, j * CellSize.z), Quaternion.identity).GetComponent<Cell>();
                 cell.WallLeft.SetActive(maze[i, j].WallLeft);
                 cell.WallBot.SetActive(maze[i, j].WallBot);
+                cell.Plane.SetActive(maze[i, j].Plane);
             }
         }
     }

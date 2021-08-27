@@ -10,6 +10,7 @@ public class MazeCell
 
     public bool WallLeft = true;
     public bool WallBot = true;
+    public bool Plane = true;
     public bool Visited = false;
     public int DistanceFromStart;
 }
@@ -33,10 +34,12 @@ public class MazeGenerator
         for (int i = 0; i < maze.GetLength(0); i++)
         {
             maze[i, _height - 1].WallLeft = false;
+            maze[i, _height - 1].Plane = false;
         }
         for (int i = 0; i < maze.GetLength(1); i++)
         {
             maze[_width - 1, i].WallBot = false;
+            maze[_width - 1, i].Plane = false;
         }
 
         MazeCreation(maze);
