@@ -20,6 +20,10 @@ public class MazeSpawner : MonoBehaviour
                 cell.WallLeft.SetActive(maze[i, j].WallLeft);
                 cell.WallBot.SetActive(maze[i, j].WallBot);
                 cell.Plane.SetActive(maze[i, j].Plane);
+                if(i == generator.Furthest.X && j == generator.Furthest.Y)
+                {
+                    cell.Plane.tag = "EndPoint";
+                }
             }
         }
     }

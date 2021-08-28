@@ -16,8 +16,9 @@ public class MazeCell
 }
 public class MazeGenerator
 {
-    [SerializeField] private int _width = 20;
-    [SerializeField] private int _height = 15;
+    [SerializeField] private int _width = 5;
+    [SerializeField] private int _height = 5;
+    public MazeCell Furthest;
 
     public MazeCell[,] GenerateMaze()
     {
@@ -100,7 +101,7 @@ public class MazeGenerator
 
     private void CreateMazeExit(MazeCell[,] maze)
     {
-        MazeCell Furthest = maze[0, 0];
+        Furthest = maze[0, 0];
 
         for (int x = 0; x < _width; x++)
         {
