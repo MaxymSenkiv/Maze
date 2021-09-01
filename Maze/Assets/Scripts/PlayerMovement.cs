@@ -8,6 +8,8 @@ public class PlayerMovement : MonoBehaviour
 {
     public Rigidbody _rigidbody;
     [SerializeField] private float _speed = 10f;
+    [SerializeField] private GameManager GM;
+    [SerializeField] private Transform Camera;
     private float X;
     private float Z;
     void Update()
@@ -21,7 +23,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void Move()
     {
-        _rigidbody.AddForce(new Vector3(X, 0f, Z) * _speed);
+        Vector3 TargetDirection = new Vector3(X, 0f, Z);
+        TargetDirection = Camera.forward * Z + Camera.right * X;
+        TargetDirection.y = 0.0f;
+        _rigidbody.velocity = TargetDirection * _speed * Time.fixedDeltaTime;
     }
 
     private void InputCheck()
@@ -36,11 +41,7 @@ public class PlayerMovement : MonoBehaviour
         {
             _rigidbody.velocity = Vector3.zero;
             Debug.Log("U win!");
-            EndGame();
+            GM.EndGame();
         }    
-    }
-    private void EndGame()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

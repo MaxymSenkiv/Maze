@@ -12,15 +12,14 @@ public class MazeCell
     public bool WallBot = true;
     public bool Plane = true;
     public bool Visited = false;
+    public bool Deadlock = false;
     public int DistanceFromStart;
 }
 public class MazeGenerator
 {
-    [SerializeField] private int _width = 5;
-    [SerializeField] private int _height = 5;
     public MazeCell Furthest;
 
-    public MazeCell[,] GenerateMaze()
+    public MazeCell[,] GenerateMaze(int _width, int _height)
     {
         MazeCell[,] maze = new MazeCell[_width, _height];
 
@@ -43,15 +42,16 @@ public class MazeGenerator
             maze[_width - 1, i].Plane = false;
         }
 
-        MazeCreation(maze);
+        MazeCreation(maze, _width, _height);
 
-        CreateMazeExit(maze);
+        CreateMazeExit(maze, _width, _height);
 
         return maze;
     }
 
-    public void MazeCreation(MazeCell[,] maze)
+    public void MazeCreation(MazeCell[,] maze, int _width, int _height)
     {
+        bool LastWasPush = false; 
         MazeCell current = maze[0, 0];
         current.Visited = true;
         Stack<MazeCell> stack = new Stack<MazeCell>();
@@ -74,12 +74,18 @@ public class MazeGenerator
 
                 chosen.Visited = true;
                 stack.Push(chosen);
+                LastWasPush = true;
                 current = chosen;
                 chosen.DistanceFromStart = stack.Count;
             }
             else
             {
+                if(LastWasPush)
+                {
+                    current.Deadlock = true;
+                }
                 current = stack.Pop();
+                LastWasPush = false;
             }
         }
         while (stack.Count > 0);
@@ -99,7 +105,7 @@ public class MazeGenerator
         }
     }
 
-    private void CreateMazeExit(MazeCell[,] maze)
+    private void CreateMazeExit(MazeCell[,] maze, int _width, int _height)
     {
         Furthest = maze[0, 0];
 
