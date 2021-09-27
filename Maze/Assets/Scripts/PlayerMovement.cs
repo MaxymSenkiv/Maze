@@ -1,21 +1,23 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
     public Rigidbody _rigidbody;
-    [SerializeField] private float _speed = 10f;
-    [SerializeField] private GameManager GM;
-    [SerializeField] private Transform Camera;
+
+    [SerializeField] private GameManager _gameManager;
+
+    [SerializeField] private Transform _camera;
+
     private float X;
     private float Z;
+
+    [SerializeField] private float _speed = 10f;
+
     void Update()
     {
         InputCheck();
     }
+
     private void FixedUpdate()
     {
         Move();
@@ -24,8 +26,10 @@ public class PlayerMovement : MonoBehaviour
     private void Move()
     {
         Vector3 TargetDirection = new Vector3(X, 0f, Z);
-        TargetDirection = Camera.forward * Z + Camera.right * X;
+
+        TargetDirection = _camera.forward * Z + _camera.right * X;
         TargetDirection.y = 0.0f;
+
         _rigidbody.velocity = TargetDirection * _speed * Time.fixedDeltaTime;
     }
 
@@ -40,8 +44,9 @@ public class PlayerMovement : MonoBehaviour
         if (collision.gameObject.tag == "EndPoint")
         {
             _rigidbody.velocity = Vector3.zero;
+
             Debug.Log("U win!");
-            GM.EndGame();
+            _gameManager.EndGame();
         }    
     }
 }

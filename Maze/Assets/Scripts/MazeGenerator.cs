@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 
 public class MazeCell
 {
@@ -11,8 +8,11 @@ public class MazeCell
     public bool WallLeft = true;
     public bool WallBot = true;
     public bool Plane = true;
+
     public bool Visited = false;
+
     public bool Deadlock = false;
+
     public int DistanceFromStart;
 }
 public class MazeGenerator
@@ -36,6 +36,7 @@ public class MazeGenerator
             maze[i, _height - 1].WallLeft = false;
             maze[i, _height - 1].Plane = false;
         }
+
         for (int i = 0; i < maze.GetLength(1); i++)
         {
             maze[_width - 1, i].WallBot = false;
@@ -51,9 +52,12 @@ public class MazeGenerator
 
     public void MazeCreation(MazeCell[,] maze, int _width, int _height)
     {
-        bool LastWasPush = false; 
+        bool _lastWasPush = false; 
+
         MazeCell current = maze[0, 0];
+
         current.Visited = true;
+
         Stack<MazeCell> stack = new Stack<MazeCell>();
         do
         {
@@ -73,19 +77,25 @@ public class MazeGenerator
                 RemoveWall(current, chosen);
 
                 chosen.Visited = true;
+
                 stack.Push(chosen);
-                LastWasPush = true;
+
+                _lastWasPush = true;
+
                 current = chosen;
+
                 chosen.DistanceFromStart = stack.Count;
             }
             else
             {
-                if(LastWasPush)
+                if(_lastWasPush)
                 {
                     current.Deadlock = true;
                 }
+
                 current = stack.Pop();
-                LastWasPush = false;
+
+                _lastWasPush = false;
             }
         }
         while (stack.Count > 0);
@@ -98,6 +108,7 @@ public class MazeGenerator
             if (current.Y > chosen.Y) current.WallBot = false;
             else chosen.WallBot = false;
         }
+
         if(current.Y == chosen.Y)
         {
             if (current.X > chosen.X) current.WallLeft = false;
@@ -114,13 +125,16 @@ public class MazeGenerator
             if (maze[x, _height - 2].DistanceFromStart > Furthest.DistanceFromStart) Furthest = maze[x, _height - 2];
             if (maze[x, 0].DistanceFromStart > Furthest.DistanceFromStart) Furthest = maze[x, 0];
         }
+
         for (int y = 0; y < _height; y++)
         {
             if (maze[_width - 2, y].DistanceFromStart > Furthest.DistanceFromStart) Furthest = maze[_width - 2, y];
             if (maze[0, y].DistanceFromStart > Furthest.DistanceFromStart) Furthest = maze[0, y];
         }
+
         if (Furthest.X == 0) Furthest.WallLeft = false;
         else if (Furthest.X == _width - 2) maze[_width-1, Furthest.Y].WallLeft = false;
+
         if (Furthest.Y == 0) Furthest.WallBot = false;
         else if (Furthest.Y == _height - 2) maze[Furthest.X, _height-1].WallBot = false;
     }
