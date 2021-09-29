@@ -5,10 +5,15 @@ public class MazeSpawner : MonoBehaviour
     public Transform CellPrefab;
     public Transform Deadlock;
 
-    [SerializeField] private int _width = 5;
-    [SerializeField] private int _height = 5;
+    public static int _width = 3;
+    public static int _height = 3;
 
     public Vector3 CellSize = new Vector3(1, 1, 0);
+
+    public void SetMazeSize(float mazeSize)
+    {
+        _height = _width = (int)mazeSize;
+    }
 
     void Start()
     {

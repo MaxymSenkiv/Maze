@@ -1,17 +1,49 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public void EndGame()
+    [SerializeField] private GameObject _player;
+
+    [SerializeField] private GameObject _winGameUI;
+
+    [SerializeField] private GameObject _loseGameUI;
+
+    private void EndGame()
     {
-        StartCoroutine("End");
+        Time.timeScale = 0f;
     }
-    IEnumerator End()
+
+    public void LoseGame()
     {
-        yield return new WaitForSeconds(.1f);
+        EndGame();
+
+        StartCoroutine("Lose");
+    }
+
+    IEnumerator Lose()
+    {
+        _loseGameUI.SetActive(true);
+
+        yield return new WaitForSeconds(3f);
+
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void WinGame()
+    {
+        EndGame();
+
+        StartCoroutine("Win");
+    }
+
+    IEnumerator Win()
+    {
+        _winGameUI.SetActive(true);
+
+        yield return new WaitForSeconds(3f);
+
+        SceneManager.LoadScene("Menu");
     }
 }

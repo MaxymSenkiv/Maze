@@ -2,7 +2,7 @@
 
 public class PlayerMovement : MonoBehaviour
 {
-    public Rigidbody _rigidbody;
+    [SerializeField] private Rigidbody _rigidbody;
 
     [SerializeField] private GameManager _gameManager;
 
@@ -10,6 +10,8 @@ public class PlayerMovement : MonoBehaviour
 
     private float X;
     private float Z;
+
+    public bool CanMove = true;
 
     [SerializeField] private float _speed = 10f;
 
@@ -25,12 +27,15 @@ public class PlayerMovement : MonoBehaviour
 
     private void Move()
     {
-        Vector3 TargetDirection = new Vector3(X, 0f, Z);
+        if (CanMove)
+        {
+            Vector3 TargetDirection = new Vector3(X, 0f, Z);
 
-        TargetDirection = _camera.forward * Z + _camera.right * X;
-        TargetDirection.y = 0.0f;
+            TargetDirection = _camera.forward * Z + _camera.right * X;
+            TargetDirection.y = 0.0f;
 
-        _rigidbody.velocity = TargetDirection * _speed * Time.fixedDeltaTime;
+            _rigidbody.velocity = TargetDirection * _speed * Time.fixedDeltaTime;
+        }
     }
 
     private void InputCheck()
@@ -43,10 +48,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision.gameObject.tag == "EndPoint")
         {
-            _rigidbody.velocity = Vector3.zero;
-
-            Debug.Log("U win!");
-            _gameManager.EndGame();
+            _gameManager.WinGame();
         }    
     }
 }
