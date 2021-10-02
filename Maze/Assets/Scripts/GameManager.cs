@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private GameObject _loseGameUI;
 
+    [SerializeField] private GameObject _deadlockTextUI;
+
     private void EndGame()
     {
         Time.timeScale = 0f;
@@ -24,6 +26,8 @@ public class GameManager : MonoBehaviour
 
     IEnumerator Lose()
     {
+        _deadlockTextUI.SetActive(false);
+
         _loseGameUI.SetActive(true);
 
         yield return new WaitForSeconds(3f);

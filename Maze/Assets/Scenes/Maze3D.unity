@@ -3000,7 +3000,12 @@ PrefabInstance:
         type: 3}
       propertyPath: _loseGameUI
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 261905373}
+    - target: {fileID: 1857044497103950714, guid: c0d404846cc5d3043a32912f82dd4508,
+        type: 3}
+      propertyPath: _deadlockTextUI
+      value: 
+      objectReference: {fileID: 1173822730}
     - target: {fileID: 1857044497103950715, guid: c0d404846cc5d3043a32912f82dd4508,
         type: 3}
       propertyPath: m_RootOrder
