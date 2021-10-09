@@ -7,9 +7,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _player;
 
     [SerializeField] private GameObject _winGameUI;
-
     [SerializeField] private GameObject _loseGameUI;
-
     [SerializeField] private GameObject _deadlockTextUI;
 
     private void EndGame()
@@ -20,14 +18,12 @@ public class GameManager : MonoBehaviour
     public void LoseGame()
     {
         EndGame();
-
         StartCoroutine("Lose");
     }
 
     IEnumerator Lose()
     {
         _deadlockTextUI.SetActive(false);
-
         _loseGameUI.SetActive(true);
 
         yield return new WaitForSeconds(3f);
@@ -38,7 +34,6 @@ public class GameManager : MonoBehaviour
     public void WinGame()
     {
         EndGame();
-
         StartCoroutine("Win");
     }
 

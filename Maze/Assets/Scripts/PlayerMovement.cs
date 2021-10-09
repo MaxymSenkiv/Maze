@@ -33,7 +33,6 @@ public class PlayerMovement : MonoBehaviour
 
             TargetDirection = _camera.forward * Z + _camera.right * X;
             TargetDirection.y = 0.0f;
-
             _rigidbody.velocity = TargetDirection * _speed * Time.fixedDeltaTime;
         }
     }

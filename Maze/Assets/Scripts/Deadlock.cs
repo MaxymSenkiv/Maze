@@ -21,7 +21,6 @@ public class Deadlock : MonoBehaviour
     private void Update()
     {
         SeeDeadlock();
-
         GetLost();
     }
 
@@ -30,11 +29,9 @@ public class Deadlock : MonoBehaviour
         if (!Physics.Linecast(Camera.main.transform.position, this.transform.position) && _renderer.isVisible && _goodTime)
         {
             _counter++;
-
             if (_counter < 2)
             {
                 StartCoroutine("DeadlockUI");
-
                 StartCoroutine("Wait");
             }
         }
