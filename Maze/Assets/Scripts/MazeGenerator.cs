@@ -52,7 +52,7 @@ public class MazeGenerator
 
     public void MazeCreation(MazeCell[,] maze, int _width, int _height)
     {
-        bool _lastWasPush = false; 
+        bool lastWasPush = false; 
 
         MazeCell current = maze[0, 0];
 
@@ -61,26 +61,26 @@ public class MazeGenerator
         Stack<MazeCell> stack = new Stack<MazeCell>();
         do
         {
-            List<MazeCell> UnvisitedNeighbours = new List<MazeCell>();
+            List<MazeCell> unvisitedNeighbours = new List<MazeCell>();
 
             int x = current.X;
             int y = current.Y;
 
-            if (x > 0 && !maze[x - 1, y].Visited) UnvisitedNeighbours.Add(maze[x - 1, y]);
-            if (y > 0 && !maze[x, y-1].Visited) UnvisitedNeighbours.Add(maze[x, y-1]);
-            if (x < _width-2 && !maze[x + 1, y].Visited) UnvisitedNeighbours.Add(maze[x + 1, y]);
-            if (y < _height-2 && !maze[x, y+1].Visited) UnvisitedNeighbours.Add(maze[x, y+1]);
+            if (x > 0 && !maze[x - 1, y].Visited) unvisitedNeighbours.Add(maze[x - 1, y]);
+            if (y > 0 && !maze[x, y-1].Visited) unvisitedNeighbours.Add(maze[x, y-1]);
+            if (x < _width-2 && !maze[x + 1, y].Visited) unvisitedNeighbours.Add(maze[x + 1, y]);
+            if (y < _height-2 && !maze[x, y+1].Visited) unvisitedNeighbours.Add(maze[x, y+1]);
 
-            if (UnvisitedNeighbours.Count > 0)
+            if (unvisitedNeighbours.Count > 0)
             {
-                MazeCell chosen = UnvisitedNeighbours[UnityEngine.Random.Range(0, UnvisitedNeighbours.Count)];
+                MazeCell chosen = unvisitedNeighbours[UnityEngine.Random.Range(0, unvisitedNeighbours.Count)];
                 RemoveWall(current, chosen);
 
                 chosen.Visited = true;
 
                 stack.Push(chosen);
 
-                _lastWasPush = true;
+                lastWasPush = true;
 
                 current = chosen;
 
@@ -88,14 +88,14 @@ public class MazeGenerator
             }
             else
             {
-                if(_lastWasPush)
+                if(lastWasPush)
                 {
                     current.Deadlock = true;
                 }
 
                 current = stack.Pop();
 
-                _lastWasPush = false;
+                lastWasPush = false;
             }
         }
         while (stack.Count > 0);

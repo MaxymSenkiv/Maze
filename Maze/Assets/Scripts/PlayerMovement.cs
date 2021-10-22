@@ -29,11 +29,11 @@ public class PlayerMovement : MonoBehaviour
     {
         if (CanMove)
         {
-            Vector3 TargetDirection = new Vector3(X, 0f, Z);
+            Vector3 targetDirection = new Vector3(X, 0f, Z);
 
-            TargetDirection = _camera.forward * Z + _camera.right * X;
-            TargetDirection.y = 0.0f;
-            _rigidbody.velocity = TargetDirection * _speed * Time.fixedDeltaTime;
+            targetDirection = _camera.forward * Z + _camera.right * X;
+            targetDirection.y = 0.0f;
+            _rigidbody.velocity = targetDirection * _speed * Time.fixedDeltaTime;
         }
     }
 
